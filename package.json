@@ -1,0 +1,23 @@
+{
+  "name": "devfund-be",
+  "version": "1.0.0",
+  "description": "Server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jbjbg/devfund-be.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jbjbg/devfund-be/issues"
+  },
+  "homepage": "https://github.com/jbjbg/devfund-be#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "jest": "^24.1.0"
+  }
+}
