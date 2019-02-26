@@ -9,8 +9,9 @@ const User = require('./user-model.js');
 const auth = require('./middleware.js');
 
 
-authRouter.post('./signup', (req, res, next) => {
+authRouter.post('/signup', (req, res, next) => {
   let user = new User(req.body);
+  console.log('🔱');
   user.save()
     .then( (user) => {
       User.findOne({_id: user._id})
@@ -26,9 +27,9 @@ authRouter.post('./signup', (req, res, next) => {
 })
 
 authRouter.post('/signin', auth(), (req, res, next) => {
+  console.log('🎇');
   res.cookie('auth', req.token);
   res.send(req.token);
-
 });
 
 authRouter.post('/key', auth, (req, res, next) => {

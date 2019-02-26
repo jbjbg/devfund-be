@@ -12,7 +12,7 @@ const errorHandler = require( './middleware/500.js');
 const notFound = require( './middleware/404.js' );
 
 const router = require('./api/routes');
-// const authRouter = require('./auth/router');
+const authRouter = require('./auth/router');
 
 
 app.use(cors());
@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 app.use(router);
-// app.use(authRouter);
+app.use(authRouter);
 
 // error handlers
 app.use(notFound);

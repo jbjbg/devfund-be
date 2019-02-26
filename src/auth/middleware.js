@@ -5,6 +5,8 @@ const util = require('util');
 
 module.exports = (capability) => {
   return (req, res, next) => {
+    console.log('🎇');
+
 
     try {
       let [authType, authString] = req.headers.authorization.split(/\s+/);
@@ -26,6 +28,8 @@ module.exports = (capability) => {
       let bufferString = base64Buffer.toString();
       let [username, password] = bufferString.split(':');
       let auth = {username, password};
+
+      console.log(auth);
 
       return User.authenticateBasic(auth)
         .then(user => _authenticate(user))

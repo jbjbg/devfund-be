@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const util = require('util');
+const uuid = require('uuid');
 
 const SINGLE_USE_TOKENS = !!process.env.SINGLE_USE_TOKENS;
 const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '10m';
@@ -12,15 +13,16 @@ const SECRET = process.env.SECRET || 'foobar';
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
-  un: { type:String, required:true, unique:true },
-  pw: { type:String, require:true },
+  key: {type: String, default: uuid()},
+  username: { type:String, required:true, unique:true },
+  password: { type:String, require:true },
   email: { type: String },
 });
 
 users.pre('save', function(next) {
-  bcrypt.hash(this.pw, 10)
+  bcrypt.hash(this.password, 10)
     .then(hashedPassword => {
-      this.pw = hashedPassword;
+      this.password = hashedPassword;
       next();
     })
     .catch(error => {throw new Error(error);});

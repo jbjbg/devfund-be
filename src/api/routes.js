@@ -14,7 +14,7 @@ const fund_me_model = require('../models/requests/fundme-model');
 
 router.get('/api/bulletin', handleGetAll);
 router.post('/api/pitch', handleCreate);
-router.put('/api/update/:id', updatePut);
+router.put('/api/update/:id', handlePut);
 router.delete('/api/delete/:id', handleDelete);
 
 
@@ -37,12 +37,16 @@ function handleCreate(req, res, next) {
     .catch( next );
 }
 
-function updatePut(req, res, next) {
-
+function handlePut(req, res, next) {
+  fund_me_model.put(req.params.id, req.body)
+    .then( result => res.status(200).json(result) )
+    .catch(next);
 }
 
 function handleDelete(req, res, next) {
-
+  fund_me_model.delete(req.params.id)
+    .then( result => res.status(200).json(result) )
+    .catch(next);
 }
 
 module.exports = router;
