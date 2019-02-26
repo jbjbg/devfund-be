@@ -13,6 +13,10 @@ const SECRET = process.env.SECRET || 'foobar';
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
+
+  
+
+
   key: {type: String, default: uuid()},
   username: { type:String, required:true, unique:true },
   password: { type:String, require:true },
