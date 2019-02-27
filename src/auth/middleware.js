@@ -3,13 +3,13 @@
 const User = require('./user-model.js');
 const util = require('util');
 
-module.exports = (capability) => {
-  return (req, res, next) => {
-    console.log('🎇');
-
-
+module.exports = (req, res, next) => {
+  // return  (req, res, next) => {
+    console.log('🐋');
     try {
       let [authType, authString] = req.headers.authorization.split(/\s+/);
+      console.log(`authType: ${authType}`);
+      console.log(`authString: ${authString}`);
 
       switch (authType.toLowerCase()) {
         case 'basic':
@@ -37,6 +37,9 @@ module.exports = (capability) => {
     }
 
     function _authBearer(authString) {
+      console.log('In _authBearer');
+      console.log(authString);
+
       return User.authenticateToken(authString)
         .then(user => _authenticate(user))
         .catch(_authError);
@@ -44,7 +47,8 @@ module.exports = (capability) => {
 
     
     function _authenticate(user) {
-      if ( user && (!capability || (user.can(capability))) ) {
+      console.log('🐅');
+      if ( user ) {
         req.user = user;
         req.token = user.generateToken();
         next();
@@ -58,5 +62,10 @@ module.exports = (capability) => {
       next('Invalid User ID/Password');
     }
 
-  };
+
+  // }
+
+
+
+
 };

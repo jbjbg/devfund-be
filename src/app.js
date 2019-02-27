@@ -10,7 +10,7 @@ const cors = require('cors');
 
 const errorHandler = require( './middleware/500.js');
 const notFound = require( './middleware/404.js' );
-
+console.log('🐋');
 const router = require('./api/routes');
 const authRouter = require('./auth/router');
 

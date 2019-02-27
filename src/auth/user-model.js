@@ -7,14 +7,12 @@ const util = require('util');
 const uuid = require('uuid');
 
 const SINGLE_USE_TOKENS = !!process.env.SINGLE_USE_TOKENS;
-const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '10m';
+const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '30m';
 const SECRET = process.env.SECRET || 'foobar';
 
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
-
-  
 
 
   key: {type: String, default: uuid()},
@@ -48,14 +46,22 @@ users.statics.createFromOauth = function(email) {
 };
 
 users.statics.authenticateToken = function(token) {
+  
   if(usedTokens.has(token)) {
+
+
     return Promise.reject('Invalid Token');
   }
 
   try {
+    console.log(token)
+    console.log(SECRET);
+    console.log('⚪️');
     let parsedToken = jwt.verify(token, SECRET);
+
     (SINGLE_USE_TOKENS) && parsedToken.type !== 'key' && usedTokens.add(token);
-    let query = {_id: parsedToked.id};
+
+    let query = {_id: parsedToken.id};
     return this.findOne(query);
   } catch(e) { throw new Error('Invalid Token'); }
 
