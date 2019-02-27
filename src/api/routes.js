@@ -11,7 +11,9 @@ const router = express.Router();
 const fund_me_model = require('../models/requests/fundme-model');
 
 // router.param('model', modelFinder);
-
+router.get('/', (req, res, next) => {
+  res.send('hello world');
+})
 router.get('/api/bulletin', handleGetAll);
 router.post('/api/pitch', handleCreate);
 router.put('/api/update/:id', handlePut);
