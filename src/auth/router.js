@@ -54,7 +54,7 @@ authRouter.post('/signin', auth(), (req, res, next) => {
   res.send(req.token);
 });
 
-authRouter.post('/key', auth, (req, res, next) => {
+authRouter.post('/key', auth(), (req, res, next) => {
   let key = req.user.generateToken();
   res.status(200).send(key);
 });

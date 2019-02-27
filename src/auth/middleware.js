@@ -42,6 +42,7 @@ module.exports = (capability) => {
         .catch(_authError);
     }
 
+    
     function _authenticate(user) {
       if ( user && (!capability || (user.can(capability))) ) {
         req.user = user;
