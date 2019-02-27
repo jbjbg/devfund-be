@@ -13,12 +13,47 @@ const SECRET = process.env.SECRET || 'foobar';
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
-
+  // {
+  //   "user": [
+  //     {
+  //       "username": "Brent",
+  //       "firstname": "Brent",
+  //       "lastname": "Woodward",
+  //       "email": "bw@email.com",
+  //       "phone": "555-555-5555",
+  //       "address1": "55 this street",
+  //       "address2": "Unit 2b",
+  //       "city": "cityville",
+  //       "state": "tx",
+  //       "zip": "55545",
+  //       "github": "http://www.google.com",
+  //       "linkedin": "http://www.google.com",
+  //       "twitter": "http://www.google.com",
+  //       "blog": "http://www.google.com",
+  //       "image": "https://via.placeholder.com/150",
+  //       "bio": "As a new developer I am looking to sharpen my skills with Sass. I am not that great with design if I am honest, and want to be able to make other peoples visions a reality with my code."
+  //     }
+  //   ]
+  // }
 
   key: {type: String, default: uuid()},
-  username: { type:String, required:true, unique:true },
-  password: { type:String, require:true },
-  email: { type: String },
+  username: { type: String, required:true, unique:true },
+  password: { type: String, require:true },
+  firstname: { type: String, required:true },
+  lastname: { type: String, required:true },
+  email: { type: String, required:true },
+  phone: { type: String },
+  address1: { type: String },
+  address2: { type: String },
+  state: { type: String },
+  city: { type: String, required:true },
+  zip: { type: String },
+  github: { type: String },
+  linkedin: { type: String },
+  twitter: { type: String },
+  blog: { type: String },
+  image: { type: Buffer },
+  bio: { type: String }
 });
 
 users.pre('save', function(next) {
@@ -54,9 +89,6 @@ users.statics.authenticateToken = function(token) {
   }
 
   try {
-    console.log(token)
-    console.log(SECRET);
-    console.log('⚪️');
     let parsedToken = jwt.verify(token, SECRET);
 
     (SINGLE_USE_TOKENS) && parsedToken.type !== 'key' && usedTokens.add(token);
