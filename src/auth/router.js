@@ -3,13 +3,14 @@
 const express = require('express');
 
 const paypal = require('paypal-rest-sdk');
+const superagent = require('superagent');
 
 const authRouter = express.Router();
 
 const cwd = process.cwd();
 const User = require('./user-model.js');
 const auth = require('./middleware.js');
-
+ 
 
 const addresses = {
   ucla: {
@@ -48,24 +49,20 @@ authRouter.post('/signup', (req, res, next) => {
     .catch(next);
 })
 
-authRouter.post('/signin', auth(), (req, res, next) => {
-  console.log('🎇');
+authRouter.post('/signin', auth, (req, res, next) => {
   res.cookie('auth', req.token);
   res.send(req.token);
 });
 
-authRouter.post('/key', auth(), (req, res, next) => {
+authRouter.post('/key', auth, (req, res, next) => {
   let key = req.user.generateToken();
   res.status(200).send(key);
 });
 
 
-authRouter.post('/pay', (req, res, next) => {
-  console.log(req.body);
+authRouter.get('/pay', (req, res, next) => {
   amount = req.body.amount;
   let item = req.body.item;
-  console.log(amount);
-  console.log(item);
   
   // let recipient = address[req.body.recipient];
   // let fundmeId = req.body.fundmeId;
@@ -83,16 +80,16 @@ authRouter.post('/pay', (req, res, next) => {
             "items": [{
                 "name": "PluralSight",
                 "sku": "001",
-                "price": "${amount}",
+                "price": "20.00",
                 "currency": "USD",
                 "quantity": 1
             }]
         },
         "amount": {
             "currency": "USD",
-            "total": "${amount}"
+            "total": "20.00"
         },
-        "description": "${item}"
+        "description": "20.00"
     }]
   };`
 
@@ -100,7 +97,6 @@ authRouter.post('/pay', (req, res, next) => {
   // paylink + payjson
 
   paypal.payment.create(payjson, function (error, payment) {
-    console.log('📛');
     if (error) {
         throw error;
     } else {
