@@ -18,6 +18,7 @@ router.get('/api/bulletin', handleGetAll);
 router.post('/api/pitch', handleCreate);
 router.put('/api/update/:id', handlePut);
 router.delete('/api/delete/:id', handleDelete);
+router.get('/api/retrieve/:id', handleGetOne);
 
 
 function handleGetAll(req, res, next) {
@@ -29,6 +30,12 @@ function handleGetAll(req, res, next) {
       };
       res.status(200).json(output);
     })
+    .catch( next );
+}
+
+function handleGetOne(req, res, next) {
+  fund_me_model.get(req.params.id)
+    .then( result => {res.status(200).json(result[0]);})
     .catch( next );
 }
 
