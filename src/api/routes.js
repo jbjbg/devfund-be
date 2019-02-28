@@ -27,11 +27,16 @@ router.get('/api/retrieve/:id', handleGetOne);
 function handleGetAll(req, res, next) {
   fund_me_model.get()
     .then( data => {
-      const output = {
-        count: data.length,
-        results: data,
-      };
-      res.status(200).json(output);
+      if(data){
+        const output = {
+          count: data.length,
+          results: data,
+        };
+        res.status(200).json(output);
+      }else {
+        res.status(200).send('no items found');
+      }
+
     })
     .catch( next );
 }

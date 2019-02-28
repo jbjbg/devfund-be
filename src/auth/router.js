@@ -22,7 +22,7 @@ authRouter.post('/signup', (req, res, next) => {
           req.user = user;
           res.set('token', req.token);
           res.cookie('auth', req.token);
-          res.send({token:req.token, _id: user._id});
+          res.json({token:req.token, _id: user._id});
         })
     })
     .catch(next);
