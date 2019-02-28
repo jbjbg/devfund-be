@@ -29,7 +29,6 @@ authRouter.post('/signup', (req, res, next) => {
 
 authRouter.post('/signin', auth, (req, res, next) => {
 
-
   let [authType, authString] = req.headers.authorization.split(/\s+/);
 
   res.cookie('auth', req.token);
@@ -51,7 +50,7 @@ authRouter.post('/key', auth, (req, res, next) => {
 });
 
 
-authRouter.get('/user/:id', auth, (req, res, next) => {
+authRouter.get('/user/:id',  (req, res, next) => {
   User.findById(req.params.id)
     .then( result => res.json(result))
     .catch( next );
