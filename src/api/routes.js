@@ -14,6 +14,9 @@ const fund_me_model = require('../models/requests/fundme-model');
 router.get('/', (req, res, next) => {
   res.send('hello world');
 })
+router.post('/img', (req, res, next) => {
+  console.log(req.body)
+})
 router.get('/api/bulletin', handleGetAll);
 router.post('/api/pitch', handleCreate);
 router.put('/api/update/:id', handlePut);

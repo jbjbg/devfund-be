@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     try {
       let [authType, authString] = req.headers.authorization.split(/\s+/);
       console.log(`authType: ${authType}`);
-      console.log(`authString: ${authString}`);
+      console.log(`authString 🤯: ${authString} 🌶`);
 
       switch (authType.toLowerCase()) {
         case 'basic':
