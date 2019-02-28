@@ -38,7 +38,7 @@ authRouter.post('/signin', auth, (req, res, next) => {
     let bufferString = base64Buffer.toString();
     let [username, password] = bufferString.split(':');
     User.findOne({username: username})
-    .then(result => res.send({token:req.token, id:result._id}))
+    .then(result => res.json({token:req.token, id:result._id}))
   } else {
     res.send(req.token);
   }
