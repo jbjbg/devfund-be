@@ -50,7 +50,7 @@ authRouter.post('/key', auth, (req, res, next) => {
 });
 
 
-authRouter.get('/user/:id',  (req, res, next) => {
+authRouter.get('/user/:id', auth, (req, res, next) => {
   User.findById(req.params.id)
     .then( result => res.json(result))
     .catch( next );
