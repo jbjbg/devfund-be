@@ -6,6 +6,7 @@ const paypal = require('paypal-rest-sdk');
 const superagent = require('superagent');
 
 const authRouter = express.Router();
+const util = require('util');
 
 const User = require('./user-model.js');
 const auth = require('./middleware.js');
@@ -51,6 +52,11 @@ authRouter.post('/key', auth, (req, res, next) => {
 
 
 authRouter.get('/user/:id', auth, (req, res, next) => {
+  let [authType, authString] = req.headers.authorization.split(/\s+/);
+  console.log(`authType: ${util.inspect(authType,{showHidden:true})}`);
+  console.log(`req body: ${util.inspect(req.body,{showHidden:true})}`);
+  console.log(`req. headers: ${util.inspect(req.headers,{showHidden:true})}`);
+  
   User.findById(req.params.id)
     .then( result => res.json(result))
     .catch( next );
