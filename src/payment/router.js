@@ -28,7 +28,7 @@ paypal.configure({
 });
 
 
-paymentRouter.get('/pay', (req, res, next) => {
+paymentRouter.post('/pay', (req, res, next) => {
   // amount = req.body.amount;
   // let item = req.body.item;
   amount = 20;
@@ -108,7 +108,7 @@ paymentRouter.get('/success', (req,res)=>{
         // res send client that token
 
         // add a redirect to the front end if successful
-        res.redirect('http://www.google.com');
+        res.redirect('https://dev-fund.herokuapp.com');
       }
   })
 
