@@ -41,8 +41,8 @@ paymentRouter.get('/pay', (req, res, next) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "http://localhost:8080/success",
-        "cancel_url": "http://localhost:8080/cancel"
+        "return_url": "https://dev-fund.herokuapp.com/success",
+        "cancel_url": "https://dev-fund.herokuapp.com/cancel"
     },
     "transactions": [{
         "item_list": {
