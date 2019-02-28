@@ -5,7 +5,7 @@ const util = require('util');
 const supergoose = require('../supergoose.js');
 const { server } = require(`../../src/app.js`);
 const mockRequest = supergoose.server(server);
-const pitchMock = require('./pitch.json');
+const pitchMock = require('./lib/pitch.json');
 console.log(`🎡${util.inspect(pitchMock,{showHidden:true})}`);
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
@@ -35,15 +35,25 @@ describe('express router should take the following paths', () => {
   });
 
   it('should respond with a 200 response on the /api/pitch path', () => {
-    return mockRequest.post('/api/pitch', pitchMock).then(results => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
       expect(results.status).toBe(200);
     });
   });
-  // it('should respond with a 200 response on the /api/update/:id', () => {
-  //   return mockRequest.post('/api/pitch').then(results => {
-  //     expect(results.status).toBe(200);
-  //   });
-  // });
+
+  it('should respond with a 200 response on the /api/update/:id', () => {
+    return mockRequest.post('/api/pitch').then(results => {
+      expect(results.status).toBe(200);
+    });
+  });
+
+
+  it('should respond with a 200 response on the /api/update/:id', () => {
+    return mockRequest.post('/api/pitch').then(results => {
+      console.log(`🤙${util.inspect(results.res,{showHidden:true})}`)
+      expect(results.res).toBe(200);
+    });
+  });
+
   // it('should respond with a 200 response on the /api/delete/:id', () => {
   //   return mockRequest.post('/api/pitch').then(results => {
   //     expect(results.status).toBe(200);
