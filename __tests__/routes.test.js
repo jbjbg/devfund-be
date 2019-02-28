@@ -6,7 +6,7 @@ const { server } = require(`${rootDir}/src/app.js`);
 const mockRequest = supergoose.server(server);
 
 describe('express router should take the following paths', () => {
-  it('should respond with a 200 response on th '/' path ', () => {
+  it('should respond with a 200 response on the / path ', () => {
     return mockRequest.get('/').then(results => {
       expect(results.status).toBe(200);
     });
