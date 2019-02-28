@@ -15,7 +15,7 @@ const authRouter = require('./auth/router');
 const paymentRouter = require('./payment/router');
 
 
-app.use(cors());
+// app.use(cors());
 app.use(morgan('dev'));
 
 app.use(express.json());

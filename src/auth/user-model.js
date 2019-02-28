@@ -119,31 +119,4 @@ users.methods.generateKey = function() {
 };
 
 
-
-// class Model {
-//   constructor(schema) {
-//     this.schema = schema;
-//   }
-//   get(_id) {
-//     let queryObject = _id ? {_id} : {};
-//     return this.schema.find(queryObject);
-//   }
-
-//   post(record) {
-//     let newRecord = new this.schema(record);
-//     console.log(util.inspect(newRecord,{depth: 10}));
-//     return newRecord.save(newRecord);
-//     console.log('⭕️');
-//   }
-
-//   put(_id, record) {
-//     return this.schema.findByIdAndUpdate(_id, record, {new:true});
-//   }
-
-//   delete(_id) {
-//     return this.schema.findByIdAndDelete(_id);
-//   }
-  
-// }
-
 module.exports = mongoose.model('users', users);
