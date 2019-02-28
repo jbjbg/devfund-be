@@ -13,47 +13,25 @@ const SECRET = process.env.SECRET || 'foobar';
 const usedTokens = new Set();
 
 const users = new mongoose.Schema({
-  // {
-  //   "user": [
-  //     {
-  //       "username": "Brent",
-  //       "firstname": "Brent",
-  //       "lastname": "Woodward",
-  //       "email": "bw@email.com",
-  //       "phone": "555-555-5555",
-  //       "address1": "55 this street",
-  //       "address2": "Unit 2b",
-  //       "city": "cityville",
-  //       "state": "tx",
-  //       "zip": "55545",
-  //       "github": "http://www.google.com",
-  //       "linkedin": "http://www.google.com",
-  //       "twitter": "http://www.google.com",
-  //       "blog": "http://www.google.com",
-  //       "image": "https://via.placeholder.com/150",
-  //       "bio": "As a new developer I am looking to sharpen my skills with Sass. I am not that great with design if I am honest, and want to be able to make other peoples visions a reality with my code."
-  //     }
-  //   ]
-  // }
 
   key: {type: String, default: uuid()},
   username: { type: String, required:true, unique:true },
   password: { type: String, required:true },
-  firstname: { type: String, required:true },
-  lastname: { type: String, required:true },
-  email: { type: String, required:true },
-  phone: { type: String },
-  address1: { type: String },
-  address2: { type: String },
-  state: { type: String },
-  city: { type: String, required:true },
-  zip: { type: String },
-  github: { type: String },
-  linkedin: { type: String },
-  twitter: { type: String },
-  blog: { type: String },
-  image: { type: Buffer },
-  bio: { type: String }
+  // firstname: { type: String, required:true },
+  // lastname: { type: String, required:true },
+  // email: { type: String, required:true },
+  // phone: { type: String },
+  // address1: { type: String },
+  // address2: { type: String },
+  // state: { type: String },
+  // city: { type: String, required:true },
+  // zip: { type: String },
+  // github: { type: String },
+  // linkedin: { type: String },
+  // twitter: { type: String },
+  // blog: { type: String },
+  // image: { type: Buffer },
+  // bio: { type: String }
 });
 
 users.pre('save', function(next) {
@@ -79,6 +57,17 @@ users.statics.createFromOauth = function(email) {
       return this.create({username, password, email});
     });
 };
+// users.statics.get = function(_id) {
+//   console.log(this);
+//   return this.findOne( {_id} )
+//     .then(user => {
+//       if(!user) { throw new Error('User Not Found'); }
+//       return user;
+//     })
+//     .catch( error => {
+//       throw error;
+//     });
+// };
 
 users.statics.authenticateToken = function(token) {
   
@@ -106,6 +95,7 @@ users.statics.authenticateBasic = function(auth) {
     .catch(error => {throw error;});
 };
 
+
 users.methods.comparePassword = function(password) {
   return bcrypt.compare(password, this.password)
     .then( valid => valid ? this : null);
@@ -127,5 +117,33 @@ users.methods.generateToken = function(type) {
 users.methods.generateKey = function() {
   return this.generateToken('key');
 };
+
+
+
+// class Model {
+//   constructor(schema) {
+//     this.schema = schema;
+//   }
+//   get(_id) {
+//     let queryObject = _id ? {_id} : {};
+//     return this.schema.find(queryObject);
+//   }
+
+//   post(record) {
+//     let newRecord = new this.schema(record);
+//     console.log(util.inspect(newRecord,{depth: 10}));
+//     return newRecord.save(newRecord);
+//     console.log('⭕️');
+//   }
+
+//   put(_id, record) {
+//     return this.schema.findByIdAndUpdate(_id, record, {new:true});
+//   }
+
+//   delete(_id) {
+//     return this.schema.findByIdAndDelete(_id);
+//   }
+  
+// }
 
 module.exports = mongoose.model('users', users);
