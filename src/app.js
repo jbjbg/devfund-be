@@ -5,7 +5,6 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 
-// 
 // error handeling middleware lives here
 
 const errorHandler = require( './middleware/500.js');
@@ -13,6 +12,7 @@ const notFound = require( './middleware/404.js' );
 
 const router = require('./api/routes');
 const authRouter = require('./auth/router');
+
 
 
 app.use(cors());

@@ -1,7 +1,3 @@
-// 'use strict';
-
-
-const router = require('../src/api/routes.js');
 
 const rootDir = process.cwd();
 const supergoose = require('./supergoose.js');
@@ -9,33 +5,60 @@ const {server} = require(`${rootDir}/src/app.js`);
 const mockRequest = supergoose.server(server);
 
 
-describe('api server', () => {
 
-    it('should respond with a 404 on an invalid route', () => {
+describe('express router should take the following paths', () => {
+
+    it('should respond with a 200 response on th "/" path ', () => {
         
       return mockRequest
-        .get('/foo')
+        .get('/')
         .then(results => {
-            console.log('reached')
-          expect(results.status).toBe(404);
-        }).catch(console.log('hello'));
-  
-    });
-
-});
-
-describe('api server', () => {
-
-    it('should respond with a 404 on an invalid route', () => {
-        // jest.setTimeout(30000);
-      return mockRequest
-        .get('/bulletin')
-        .then(results => {
-            console.log('reached')
+           
           expect(results.status).toBe(200);
-        }).catch(console.log('hello'));
+        })
   
     });
 
+    it('should respond with a 200 response on the /api/bulletin path', () => {
+        
+        return mockRequest
+          .post('/api/bulletin')
+          .then(results => {
+              
+            expect(results.status).toBe(200);
+          });
+    
+      });
+      it('should respond with a 200 response on the "/api/pitch path"', () => {
+        
+        return mockRequest
+          .post('/api/pitch')
+          .then(results => {
+            
+            expect(results.status).toBe(200);
+          });
+    
+      });
+      it('should respond with a 200 response on the "/api/update/:id"', () => {
+        
+        return mockRequest
+          .post('/api/pitch')
+          .then(results => {
+            
+            expect(results.status).toBe(200);
+          });
+    
+      });
+      it('should respond with a 200 response on the "/api/delete/:id"', () => {
+        
+        return mockRequest
+          .post('/api/pitch')
+          .then(results => {
+            
+            expect(results.status).toBe(200);
+          });
+    
+      });
+      
 });
 

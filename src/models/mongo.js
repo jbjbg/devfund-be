@@ -7,12 +7,14 @@ class Model {
   }
   get(_id) {
     let queryObject = _id ? {_id} : {};
+    // console.log(this.schema.find(queryObject));
+    
     return this.schema.find(queryObject);
   }
 
   post(record) {
     let newRecord = new this.schema(record);
-    console.log(util.inspect(newRecord,{depth: 10}));
+    // console.log(util.inspect(newRecord,{depth: 10}));
     return newRecord.save(newRecord);
     console.log('⭕️');
   }

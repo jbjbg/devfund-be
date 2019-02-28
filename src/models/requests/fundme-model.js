@@ -1,4 +1,5 @@
 'use strict';
+
 const Model = require('../mongo.js');
 const schema = require('./fundme-schema.js');
 

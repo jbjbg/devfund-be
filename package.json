@@ -6,10 +6,11 @@
   "scripts": {
     "test": "jest --verbose",
     "start": "node index.js",
-    "test-watch": "jest --watchAll --verbose"
+    "test-watch": "jest --watchAll --verbose  --coverage"
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "verbose": true
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "morgan": "^1.9.1",
     "paypal-rest-sdk": "^1.8.1",
     "require-directory": "^2.1.1",
+    "superagent": "^4.1.0",
     "supertest": "^3.4.2",
     "uuid": "^3.3.2"
   }

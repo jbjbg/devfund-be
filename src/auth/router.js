@@ -64,8 +64,8 @@ authRouter.post('/pay', (req, res, next) => {
   console.log(req.body);
   amount = req.body.amount;
   let item = req.body.item;
-  console.log(amount);
-  console.log(item);
+//   console.log(amount);
+//   console.log(item);
   
   // let recipient = address[req.body.recipient];
   // let fundmeId = req.body.fundmeId;
@@ -132,7 +132,7 @@ authRouter.get('/success', (req,res)=>{
   
   paypal.payment.execute(paymentId, execute_payment_json, function (error, payment){
       if(error){
-          console.log(error.response);
+        //   console.log(error.response);
           throw error;
       }
       else{

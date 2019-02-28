@@ -8,8 +8,6 @@ let mongoServer;
 let supergoose = module.exports = {};
 
 
-
-
 supergoose.server = (server) => supertest(server);
 supergoose.stopDB = () => {
  
