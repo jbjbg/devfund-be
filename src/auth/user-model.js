@@ -38,7 +38,7 @@ const users = new mongoose.Schema({
 
   key: {type: String, default: uuid()},
   username: { type: String, required:true, unique:true },
-  password: { type: String, require:true },
+  password: { type: String, required:true },
   firstname: { type: String, required:true },
   lastname: { type: String, required:true },
   email: { type: String, required:true },
@@ -62,7 +62,7 @@ users.pre('save', function(next) {
       this.password = hashedPassword;
       next();
     })
-    .catch(error => {throw new Error(error);});
+    .catch(error => {throw new Error(error)});
 });
 
 users.statics.createFromOauth = function(email) {
