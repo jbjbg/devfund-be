@@ -28,10 +28,16 @@ authRouter.post('/signup', (req, res, next) => {
 })
 
 authRouter.post('/signin', auth, (req, res, next) => {
-  console.log(`🤯: ${req.headers.authorization}`);
+
+
+  let [authType, authString] = req.headers.authorization.split(/\s+/);
+
   res.cookie('auth', req.token);
-  if(req.headers.authorization) {
-    User.findOne({username: req.headers.authorization.username})
+  if(authType.toLowerCase() === "basic") {
+    let base64Buffer = Buffer.from(authString, 'base64');
+    let bufferString = base64Buffer.toString();
+    let [username, password] = bufferString.split(':');
+    User.findOne({username: username})
     .then(result => res.send({token:req.token, id:result._id}))
   } else {
     res.send(req.token);
