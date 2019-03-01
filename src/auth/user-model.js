@@ -3,7 +3,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const util = require('util');
 const uuid = require('uuid');
 
 const SINGLE_USE_TOKENS = !!process.env.SINGLE_USE_TOKENS;
@@ -57,17 +56,8 @@ users.statics.createFromOauth = function(email) {
       return this.create({username, password, email});
     });
 };
-// users.statics.get = function(_id) {
-//   console.log(this);
-//   return this.findOne( {_id} )
-//     .then(user => {
-//       if(!user) { throw new Error('User Not Found'); }
-//       return user;
-//     })
-//     .catch( error => {
-//       throw error;
-//     });
-// };
+
+
 
 users.statics.authenticateToken = function(token) {
   
