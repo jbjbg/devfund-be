@@ -1,16 +1,11 @@
 'use strict'
 
-// const cwd = process.cwd();
 
 const express = require('express');
 const router = express.Router();
 
-// const modelFinder = require('../middleware/model-finder.js');
-
-
 const fund_me_model = require('../models/requests/fundme-model');
 
-// router.param('model', modelFinder);
 router.get('/', (req, res, next) => {
   res.send('alive');
 })

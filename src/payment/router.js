@@ -29,8 +29,8 @@ paymentRouter.post('/pay', (req, res, next) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://dev-fund.herokuapp.com//success",
-        "cancel_url": "https://dev-fund.herokuapp.com//cancel"
+        "return_url": "https://dev-fund.herokuapp.com/success",
+        "cancel_url": "https://dev-fund.herokuapp.com/cancel"
     },
     "transactions": [{
         "item_list": {
@@ -96,7 +96,7 @@ paymentRouter.get('/success', (req,res)=>{
             return;
           })
 
-          res.redirect('https://www.devfund.io/success').send(data.body);
+          res.redirect('https://www.devfund.io/success');
           return;
       }
   })

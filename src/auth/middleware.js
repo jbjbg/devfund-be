@@ -1,7 +1,6 @@
 'use strict';
 
 const User = require('./user-model.js');
-const util = require('util');
 
 module.exports = (req, res, next) => {
 
