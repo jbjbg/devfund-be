@@ -62,7 +62,7 @@ authRouter.get('/user/:id', auth, (req, res, next) => {
     .catch( next );
 })
 
-authRouter.post('/user/update/:id', auth, (req, res, next) => {
+authRouter.put('/user/update/:id', auth, (req, res, next) => {
   console.log(req)
   User.findByIdAndUpdate({_id: req.params.id}, req.body)
     .then( result => res.json(result))
