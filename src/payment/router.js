@@ -9,18 +9,6 @@ const paymentRouter = express.Router();
 let amount = 0;
 
 
-
-const addresses = {
-  ucla: {
-    client_id: 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
-    client_secret: 'EJus2Ylo66CauLOaPycnHiMB8efYElRTytNxw6bSbyhoH70jgpUO0HnIp6t6BOlDk6CMHJHEYbQ4ezyO'
-  },
-  apple:{
-    client_id: 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
-    client_secret: 'EJus2Ylo66CauLOaPycnHiMB8efYElRTytNxw6bSbyhoH70jgpUO0HnIp6t6BOlDk6CMHJHEYbQ4ezyO'
-  }
-};
-
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
@@ -104,16 +92,26 @@ paymentRouter.get('/success', (req,res)=>{
         throw error;
       }
       else{
-        // adk provider api for token
-        // res send client that token
 
-        // add a redirect to the front end if successful
-        res.redirect('https://dev-fund.herokuapp.com');
+        superagent
+          .get('https://company-server.herokuapp.com/')
+          .then(data => {
+            console.log(data.body)
+            return res.redirect('https://dev-fund.herokuapp.com/igotatoken').json(data.body);
+          })
+          .catch(err => console.error(err));
+
+
       }
   })
 
 
 })
+
+paymentRouter.get('/igotatoken', data => {
+  console.log(data.body)
+})
+
 
 paymentRouter.get('/cancel', (req,res)=> res.send('Cancelled'))
 
