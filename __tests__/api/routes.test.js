@@ -40,19 +40,23 @@ describe('express router should take the following paths', () => {
     });
   });
 
-  it('should respond with a 200 response on the /api/update/:id', () => {
-    return mockRequest.post('/api/pitch').then(results => {
-      expect(results.status).toBe(200);
+
+  it('the response body should contain the object json', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      // console.log(`🤙${util.inspect(results.res.text,{showHidden:true, depth: 25})}`)
+      console.log(`🤙${util.inspect(results.body,{showHidden:true, depth: 25})}`)
+      expect(results.body.item).toEqual(pitchMock.item);
     });
   });
 
 
-  it('should respond with a 200 response on the /api/update/:id', () => {
-    return mockRequest.post('/api/pitch').then(results => {
-      console.log(`🤙${util.inspect(results.res,{showHidden:true})}`)
-      expect(results.res).toBe(200);
-    });
-  });
+
+  // it('should respond with a 200 response on the /api/update/:id', () => {
+  //   return mockRequest.post('/api/pitch').then(results => {
+  //     console.log(`🤙${util.inspect(results.res,{showHidden:true, depth: 25})}`)
+  //     expect(results.res).toBe(200);
+  //   });
+  // });
 
   // it('should respond with a 200 response on the /api/delete/:id', () => {
   //   return mockRequest.post('/api/pitch').then(results => {
