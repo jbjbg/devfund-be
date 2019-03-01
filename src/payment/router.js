@@ -9,18 +9,6 @@ const paymentRouter = express.Router();
 let amount = 0;
 
 
-
-const addresses = {
-  ucla: {
-    client_id: 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
-    client_secret: 'EJus2Ylo66CauLOaPycnHiMB8efYElRTytNxw6bSbyhoH70jgpUO0HnIp6t6BOlDk6CMHJHEYbQ4ezyO'
-  },
-  apple:{
-    client_id: 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
-    client_secret: 'EJus2Ylo66CauLOaPycnHiMB8efYElRTytNxw6bSbyhoH70jgpUO0HnIp6t6BOlDk6CMHJHEYbQ4ezyO'
-  }
-};
-
 paypal.configure({
   'mode': 'sandbox', //sandbox or live
   'client_id': 'AWjEaYQGjQb99IhkxZFa79SQSuBx6Z_J83RSBhkmVB9RWpIpLd4TI5yI9psWXE32YXvjSi1Pgcexi0kK',
@@ -41,8 +29,8 @@ paymentRouter.post('/pay', (req, res, next) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://dev-fund.herokuapp.com/success",
-        "cancel_url": "https://dev-fund.herokuapp.com/cancel"
+        "return_url": "https://dev-fund.herokuapp.com//success",
+        "cancel_url": "https://dev-fund.herokuapp.com//cancel"
     },
     "transactions": [{
         "item_list": {
@@ -62,10 +50,6 @@ paymentRouter.post('/pay', (req, res, next) => {
     }]
   };
 
-
-  // res send to client
-  // paylink + payjson
-
   paypal.payment.create(payjson, function (error, payment) {
 
     if (error) {
@@ -75,7 +59,6 @@ paymentRouter.post('/pay', (req, res, next) => {
         for(let i =0; i < payment.links.length; i++){
           if(payment.links[i].rel === 'approval_url'){
             res.redirect(payment.links[i].href); 
-            // res.send(payment.links[i].href);
           }
         }
     }
@@ -104,16 +87,24 @@ paymentRouter.get('/success', (req,res)=>{
         throw error;
       }
       else{
-        // adk provider api for token
-        // res send client that token
 
-        // add a redirect to the front end if successful
-        res.redirect('https://dev-fund.herokuapp.com');
+        superagent
+          .get('https://company-server.herokuapp.com/')
+          .then(data => {
+            console.log(data.body)
+            // data.body is the token when we need to send the token some where use superagent
+            return;
+          })
+
+          res.redirect('https://www.devfund.io/success').send(data.body);
+          return;
       }
   })
 
 
 })
+
+
 
 paymentRouter.get('/cancel', (req,res)=> res.send('Cancelled'))
 
