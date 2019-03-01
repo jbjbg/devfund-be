@@ -13,7 +13,7 @@ const fund_me = mongoose.Schema({
   city: { type: String},
   bio: { type: String },
   github: { type: String},
-  image: { type: String, data: Buffer},
+  image: { type: String, data: Buffer },
   linkedin: { type: String },
   twitter: { type: String },
   blog: { type: String },

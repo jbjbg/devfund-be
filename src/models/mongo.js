@@ -12,9 +12,7 @@ class Model {
 
   post(record) {
     let newRecord = new this.schema(record);
-    console.log(util.inspect(newRecord,{depth: 10}));
     return newRecord.save(newRecord);
-    console.log('⭕️');
   }
 
   put(_id, record) {
