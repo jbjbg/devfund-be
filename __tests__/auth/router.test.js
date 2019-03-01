@@ -76,10 +76,9 @@ describe('Auth router', () => {
     return mockRequest.put(`/user/update/${id}`)
       .auth(user.username, user.password)
       .send({username: 'notpaul'})
-      .then(results => {
-        user.username = results.body.username;
-
-        mockRequest.get(`/user/${id}`)
+      .then(data => {
+        user.username = 'notpaul';
+        return mockRequest.get(`/user/${id}`)
           .auth(user.username, user.password)
           .then(results => {
             console.log(results.body);
