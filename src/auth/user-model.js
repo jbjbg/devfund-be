@@ -18,7 +18,7 @@ const users = new mongoose.Schema({
   username: { type: String, required:true, unique:true },
   password: { type: String, required:true },
   firstname: { type: String},
-  lastname: { type: String,
+  lastname: { type: String},
   email: { type: String},
   phone: { type: String },
   address1: { type: String },
