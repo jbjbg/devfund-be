@@ -12,10 +12,7 @@ const fund_me_model = require('../models/requests/fundme-model');
 
 // router.param('model', modelFinder);
 router.get('/', (req, res, next) => {
-  res.send('hello world');
-})
-router.post('/img', (req, res, next) => {
-  console.log(req.body)
+  res.send('alive');
 })
 router.get('/api/bulletin', handleGetAll);
 router.post('/api/pitch', handleCreate);
@@ -48,7 +45,6 @@ function handleGetOne(req, res, next) {
 }
 
 function handleCreate(req, res, next) {
-  console.log('before handleCreate post')
   fund_me_model.post(req.body)
     .then( result => res.status(200).json(result) )
     .catch( next );

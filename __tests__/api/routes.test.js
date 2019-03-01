@@ -1,73 +1,121 @@
 'use strict';
 
-const rootDir = process.cwd();
-const util = require('util');
 const supergoose = require('../supergoose.js');
 const { server } = require(`../../src/app.js`);
 const mockRequest = supergoose.server(server);
 const pitchMock = require('./lib/pitch.json');
-console.log(`🎡${util.inspect(pitchMock,{showHidden:true})}`);
 beforeAll(supergoose.startDB);
 afterAll(supergoose.stopDB);
 let pitch_id;
 
-mockRequest.post('/api/pitch').send(pitchMock).then(results => {
-  pitch_id = results.body._id;
-  console.log(pitch_id);
-  return;
-})
 
-describe('express router should take the following paths', () => {
-  it('should respond with a 200 response on the / path ', () => {
+
+describe('Testing the API Router', () => {
+  test('GET at root path should return a 200', () => {
     return mockRequest.get('/').then(results => {
       expect(results.status).toBe(200);
     });
   });
 
 
-  it('Should receive hello world', () => {
+  test('GET at root path proof of life', () => {
     return mockRequest.get('/').then(results => {
-      expect(results.res.text).toEqual('hello world');
+      expect(results.res.text).toEqual('alive');
     });
   });
 
-  it('should respond with a 200 response on the /api/bulletin path', () => {
+  test('GET at /api/bulletin should return a 200', () => {
     return mockRequest.get('/api/bulletin')
     .then(results => {
       expect(results.status).toBe(200);
     })
     .catch( err => console.log(err))
-
   });
 
-  it('should respond with a 200 response on the /api/pitch path', () => {
+  test('POST at /api/pitch with mock pitch json should create pitch and return 200', () => {
     return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
       expect(results.status).toBe(200);
     });
   });
 
 
-  it('the response body should contain the object json', () => {
+  test('POST at /api/pitch with mock pitch json should create pitch and return new pitch object', () => {
     return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
-      // console.log(`🤙${util.inspect(results.res.text,{showHidden:true, depth: 25})}`)
-      console.log(`🤙${util.inspect(results.body,{showHidden:true, depth: 25})}`)
       expect(results.body.item).toEqual(pitchMock.item);
     });
   });
 
-  it('should respond with a 200 response on the /api/update/:id', () => {
-    // mockRequest.post('/api/pitch').send(pitchMock).then()
-    pitchMock.item = "itemchanged";
-    console.log(`🍕:${pitchMock.item}`);
-    return mockRequest.put(`/api/update/pitch/${pitch_id}`).send(pitchMock).then(results => {
-      console.log(`🍔${util.inspect(results.body,{ showHidden: true })}`)
-      expect(results.body.item).toEqual('itemchanged');
-    });
+  test('PUT at /api/update/:id should return 200', () => {
+
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    }).then(data => {
+      pitchMock.item = "itemchanged";
+      return mockRequest.put(`/api/update/${pitch_id}`).send(pitchMock).then(results => {
+        expect(results.status).toBe(200);
+      });
+    })
   });
 
-  // it('should respond with a 200 response on the /api/delete/:id', () => {
-  //   return mockRequest.post('/api/pitch').then(results => {
-  //     expect(results.status).toBe(200);
-  //   });
-  // });
+  test('PUT at /api/update/:id should update the pitch in DB', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    }).then(data => {
+      pitchMock.item = "itemchanged";
+      return mockRequest.put(`/api/update/${pitch_id}`).send(pitchMock).then(results => {
+        expect(results.body.item).toEqual('itemchanged');
+      });
+    })
+  });
+
+  test('DELETE at /api/delete/:id should return a 200', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    }).then(data => {
+      return mockRequest.delete(`/api/delete/${pitch_id}`).then(results => {
+        expect(results.status).toBe(200);
+      });
+    })
+  });
+
+
+  test('DELETE at /api/delete/:id should delete the pitch item from the database', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    })
+    .then(data => {
+      return mockRequest.delete(`/api/delete/${pitch_id}`).then(results => {
+      });
+    })
+    .then(data => {
+      return mockRequest.get(`/api/retrieve/${pitch_id}`).then( results => {
+        expect(results.body).toEqual('');
+      })
+    })
+  });
+
+  test('GET at /api/retrieve/:id should return 200', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    })
+    .then(data => {
+      return mockRequest.get(`/api/retrieve/${pitch_id}`).then(results => {
+        expect(results.status).toBe(200);
+      })
+    })
+  })
+
+
+  test('GET at /api/retrieve/:id should return the right object from the database', () => {
+    return mockRequest.post('/api/pitch').send(pitchMock).then(results => {
+      pitch_id = results.body._id;
+    })
+    .then(data => {
+      return mockRequest.get(`/api/retrieve/${pitch_id}`).then(results => {
+        expect(results.body.city).toEqual('test city');
+      })
+    })
+  })
+
+
 });
