@@ -29,8 +29,8 @@ paymentRouter.post('/pay', (req, res, next) => {
         "payment_method": "paypal"
     },
     "redirect_urls": {
-        "return_url": "https://dev-fund.herokuapp.com/success",
-        "cancel_url": "https://dev-fund.herokuapp.com/cancel"
+        "return_url": "https://dev-fund.herokuapp.com//success",
+        "cancel_url": "https://dev-fund.herokuapp.com//cancel"
     },
     "transactions": [{
         "item_list": {
@@ -50,10 +50,6 @@ paymentRouter.post('/pay', (req, res, next) => {
     }]
   };
 
-
-  // res send to client
-  // paylink + payjson
-
   paypal.payment.create(payjson, function (error, payment) {
 
     if (error) {
@@ -63,7 +59,6 @@ paymentRouter.post('/pay', (req, res, next) => {
         for(let i =0; i < payment.links.length; i++){
           if(payment.links[i].rel === 'approval_url'){
             res.redirect(payment.links[i].href); 
-            // res.send(payment.links[i].href);
           }
         }
     }
@@ -97,20 +92,18 @@ paymentRouter.get('/success', (req,res)=>{
           .get('https://company-server.herokuapp.com/')
           .then(data => {
             console.log(data.body)
-            return res.redirect('https://dev-fund.herokuapp.com/igotatoken').json(data.body);
+            // data.body is the token when we need to send the token some where use superagent
+            return;
           })
-          .catch(err => console.error(err));
 
-
+          res.redirect('https://www.devfund.io/success').send(data.body);
+          return;
       }
   })
 
 
 })
 
-paymentRouter.get('/igotatoken', data => {
-  console.log(data.body)
-})
 
 
 paymentRouter.get('/cancel', (req,res)=> res.send('Cancelled'))
