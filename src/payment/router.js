@@ -91,7 +91,7 @@ paymentRouter.get('/success', (req,res)=>{
         superagent
           .get('https://company-server.herokuapp.com/')
           .then(data => {
-            console.log(data.body)
+            // console.log(data.body)
             // data.body is the token when we need to send the token some where use superagent
             return;
           })
