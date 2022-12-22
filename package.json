@@ -30,7 +30,7 @@
     "express": "^4.16.4",
     "jest": "23.6.0",
     "jsdoc": "^3.5.5",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^9.0.0",
     "mongodb-memory-server": "^3.1.1",
     "mongoose": "^5.4.15",
     "mongoose-schema-jsonschema": "^1.2.1",
