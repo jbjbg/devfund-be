@@ -28,7 +28,7 @@
     "cors": "^2.8.5",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
-    "jest": "23.6.0",
+    "jest": "29.3.1",
     "jsdoc": "^3.5.5",
     "jsonwebtoken": "^8.5.0",
     "mongodb-memory-server": "^3.1.1",
